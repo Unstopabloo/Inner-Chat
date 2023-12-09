@@ -17,6 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+def read_root():
+    return {"response": "This is the root of the API, to get response send a POST request to /ask with a JSON body like this: {\"content\": \"your question\""}
+
 @app.post("/ask")
 async def ask_openai(question: Question):
   client = OpenAI(
@@ -46,31 +51,4 @@ async def ask_openai(question: Question):
   print(answer)
   return {"response": answer}
 
-# app = FastAPI()
 
-# client = OpenAI(
-#   api_key = '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'
-# )
-
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
-
-# @app.get("/chao")
-# def read_root():
-#     return {"response": "chao world"}
-
-# response = client.chat.completions.create(
-#   model='gpt-3.5-turbo',
-#   messages=[
-#     {
-#       "role": "user",
-#       "content": "Dime para que sirve el Mindfulness y como me puede ayudar"
-#     }
-#   ],
-#   max_tokens=40,
-#   stream=True,
-# )
-# for chunk in response:
-#     if chunk.choices[0].delta.content is not None:
-#         print(chunk.choices[0].delta.content, end="")
